@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicHooksDispatchCertificatesRouteImport } from './routes/api/public/hooks/dispatch-certificates'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksDispatchCertificatesRoute =
+  ApiPublicHooksDispatchCertificatesRouteImport.update({
+    id: '/api/public/hooks/dispatch-certificates',
+    path: '/api/public/hooks/dispatch-certificates',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/hooks/dispatch-certificates': typeof ApiPublicHooksDispatchCertificatesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/hooks/dispatch-certificates': typeof ApiPublicHooksDispatchCertificatesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/hooks/dispatch-certificates': typeof ApiPublicHooksDispatchCertificatesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/api/public/hooks/dispatch-certificates'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/api/public/hooks/dispatch-certificates'
+  id: '__root__' | '/' | '/api/public/hooks/dispatch-certificates'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicHooksDispatchCertificatesRoute: typeof ApiPublicHooksDispatchCertificatesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +59,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/dispatch-certificates': {
+      id: '/api/public/hooks/dispatch-certificates'
+      path: '/api/public/hooks/dispatch-certificates'
+      fullPath: '/api/public/hooks/dispatch-certificates'
+      preLoaderRoute: typeof ApiPublicHooksDispatchCertificatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicHooksDispatchCertificatesRoute:
+    ApiPublicHooksDispatchCertificatesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
