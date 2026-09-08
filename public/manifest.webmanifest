@@ -1,0 +1,13 @@
+{
+  "name": "Certara — Certificate platform",
+  "short_name": "Certara",
+  "description": "Design, generate, verify and deliver event certificates at scale.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fbf9f3",
+  "theme_color": "#2b3550",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "48x48", "type": "image/x-icon" }
+  ]
+}
