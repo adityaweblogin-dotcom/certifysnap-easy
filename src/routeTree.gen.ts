@@ -18,6 +18,7 @@ import { Route as AuthenticatedOrganizationsRouteImport } from './routes/_authen
 import { Route as VerifyIndexRouteImport } from './routes/verify.index'
 import { Route as VerifyCodeRouteImport } from './routes/verify.$code'
 import { Route as AuthenticatedEventsIndexRouteImport } from './routes/_authenticated/events.index'
+import { Route as AuthenticatedEventsEventIdRouteImport } from './routes/_authenticated/events.$eventId'
 import { Route as ApiPublicHooksDispatchCertificatesRouteImport } from './routes/api/public/hooks/dispatch-certificates'
 
 const IndexRoute = IndexRouteImport.update({
@@ -66,6 +67,12 @@ const AuthenticatedEventsIndexRoute =
     path: '/events/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedEventsEventIdRoute =
+  AuthenticatedEventsEventIdRouteImport.update({
+    id: '/events/$eventId',
+    path: '/events/$eventId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiPublicHooksDispatchCertificatesRoute =
   ApiPublicHooksDispatchCertificatesRouteImport.update({
     id: '/api/public/hooks/dispatch-certificates',
@@ -81,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/organizations': typeof AuthenticatedOrganizationsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/verify/': typeof VerifyIndexRoute
+  '/events/$eventId': typeof AuthenticatedEventsEventIdRoute
   '/events/': typeof AuthenticatedEventsIndexRoute
   '/api/public/hooks/dispatch-certificates': typeof ApiPublicHooksDispatchCertificatesRoute
 }
@@ -92,6 +100,7 @@ export interface FileRoutesByTo {
   '/organizations': typeof AuthenticatedOrganizationsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/verify': typeof VerifyIndexRoute
+  '/events/$eventId': typeof AuthenticatedEventsEventIdRoute
   '/events': typeof AuthenticatedEventsIndexRoute
   '/api/public/hooks/dispatch-certificates': typeof ApiPublicHooksDispatchCertificatesRoute
 }
@@ -105,6 +114,7 @@ export interface FileRoutesById {
   '/_authenticated/organizations': typeof AuthenticatedOrganizationsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/verify/': typeof VerifyIndexRoute
+  '/_authenticated/events/$eventId': typeof AuthenticatedEventsEventIdRoute
   '/_authenticated/events/': typeof AuthenticatedEventsIndexRoute
   '/api/public/hooks/dispatch-certificates': typeof ApiPublicHooksDispatchCertificatesRoute
 }
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/organizations'
     | '/verify/$code'
     | '/verify/'
+    | '/events/$eventId'
     | '/events/'
     | '/api/public/hooks/dispatch-certificates'
   fileRoutesByTo: FileRoutesByTo
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/organizations'
     | '/verify/$code'
     | '/verify'
+    | '/events/$eventId'
     | '/events'
     | '/api/public/hooks/dispatch-certificates'
   id:
@@ -141,6 +153,7 @@ export interface FileRouteTypes {
     | '/_authenticated/organizations'
     | '/verify/$code'
     | '/verify/'
+    | '/_authenticated/events/$eventId'
     | '/_authenticated/events/'
     | '/api/public/hooks/dispatch-certificates'
   fileRoutesById: FileRoutesById
@@ -219,6 +232,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEventsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/events/$eventId': {
+      id: '/_authenticated/events/$eventId'
+      path: '/events/$eventId'
+      fullPath: '/events/$eventId'
+      preLoaderRoute: typeof AuthenticatedEventsEventIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/hooks/dispatch-certificates': {
       id: '/api/public/hooks/dispatch-certificates'
       path: '/api/public/hooks/dispatch-certificates'
@@ -233,6 +253,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAuditRoute: typeof AuthenticatedAuditRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedOrganizationsRoute: typeof AuthenticatedOrganizationsRoute
+  AuthenticatedEventsEventIdRoute: typeof AuthenticatedEventsEventIdRoute
   AuthenticatedEventsIndexRoute: typeof AuthenticatedEventsIndexRoute
 }
 
@@ -240,6 +261,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAuditRoute: AuthenticatedAuditRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedOrganizationsRoute: AuthenticatedOrganizationsRoute,
+  AuthenticatedEventsEventIdRoute: AuthenticatedEventsEventIdRoute,
   AuthenticatedEventsIndexRoute: AuthenticatedEventsIndexRoute,
 }
 
