@@ -228,7 +228,7 @@ function EventWorkspace() {
       <PageHeader
         eyebrow={organization.data?.name ?? "Event"}
         title={event.data.name}
-        description={event.data.description ?? undefined}
+        {...(event.data.description ? { description: event.data.description } : {})}
         actions={
           canManage ? (
             <>
@@ -380,7 +380,7 @@ function EventWorkspace() {
             <TemplateDesigner
               template={template.data}
               previewValues={buildCertificateValues(
-                rows[0] ?? { name: "Sample Name", email: "sample@example.com", data: {} },
+                rows[0] ?? sampleParticipant(eventId, event.data.certificate_type),
                 event.data,
                 organization.data ?? null,
                 "CERT-PREVIEW",
