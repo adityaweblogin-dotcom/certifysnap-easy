@@ -74,6 +74,18 @@ export const Route = createFileRoute("/_authenticated/events/$eventId")({
   component: EventWorkspace,
 });
 
+function sampleParticipant(eventId: string, certificateType: string): Participant {
+  return {
+    id: "sample",
+    event_id: eventId,
+    name: "Sample Name",
+    email: "sample@example.com",
+    certificate_type: certificateType,
+    data: {},
+    created_at: new Date().toISOString(),
+  };
+}
+
 function EventWorkspace() {
   const { eventId } = Route.useParams();
   const { canManage } = useRoles();
@@ -429,7 +441,7 @@ function EventWorkspace() {
                         </Link>
                       </TableCell>
                       <TableCell className="text-sm">
-                        {certificate.values['recipient_name'] ?? "—"}
+                        {certificate.values['name'] ?? "—"}
                       </TableCell>
                       <TableCell>
                         <Badge
