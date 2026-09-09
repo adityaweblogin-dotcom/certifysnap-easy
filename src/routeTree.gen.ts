@@ -14,8 +14,11 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedAuditRouteImport } from './routes/_authenticated/audit'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedOrganizationsRouteImport } from './routes/_authenticated/organizations'
 import { Route as VerifyIndexRouteImport } from './routes/verify.index'
 import { Route as VerifyCodeRouteImport } from './routes/verify.$code'
+import { Route as AuthenticatedEventsIndexRouteImport } from './routes/_authenticated/events.index'
+import { Route as AuthenticatedEventsEventIdRouteImport } from './routes/_authenticated/events.$eventId'
 import { Route as ApiPublicHooksDispatchCertificatesRouteImport } from './routes/api/public/hooks/dispatch-certificates'
 
 const IndexRoute = IndexRouteImport.update({
@@ -42,6 +45,12 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedOrganizationsRoute =
+  AuthenticatedOrganizationsRouteImport.update({
+    id: '/organizations',
+    path: '/organizations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const VerifyIndexRoute = VerifyIndexRouteImport.update({
   id: '/verify/',
   path: '/verify/',
@@ -52,6 +61,18 @@ const VerifyCodeRoute = VerifyCodeRouteImport.update({
   path: '/verify/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedEventsIndexRoute =
+  AuthenticatedEventsIndexRouteImport.update({
+    id: '/events/',
+    path: '/events/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedEventsEventIdRoute =
+  AuthenticatedEventsEventIdRouteImport.update({
+    id: '/events/$eventId',
+    path: '/events/$eventId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiPublicHooksDispatchCertificatesRoute =
   ApiPublicHooksDispatchCertificatesRouteImport.update({
     id: '/api/public/hooks/dispatch-certificates',
@@ -64,8 +85,11 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/audit': typeof AuthenticatedAuditRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/organizations': typeof AuthenticatedOrganizationsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/verify/': typeof VerifyIndexRoute
+  '/events/$eventId': typeof AuthenticatedEventsEventIdRoute
+  '/events/': typeof AuthenticatedEventsIndexRoute
   '/api/public/hooks/dispatch-certificates': typeof ApiPublicHooksDispatchCertificatesRoute
 }
 export interface FileRoutesByTo {
@@ -73,8 +97,11 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/audit': typeof AuthenticatedAuditRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/organizations': typeof AuthenticatedOrganizationsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/verify': typeof VerifyIndexRoute
+  '/events/$eventId': typeof AuthenticatedEventsEventIdRoute
+  '/events': typeof AuthenticatedEventsIndexRoute
   '/api/public/hooks/dispatch-certificates': typeof ApiPublicHooksDispatchCertificatesRoute
 }
 export interface FileRoutesById {
@@ -84,8 +111,11 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/_authenticated/audit': typeof AuthenticatedAuditRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/organizations': typeof AuthenticatedOrganizationsRoute
   '/verify/$code': typeof VerifyCodeRoute
   '/verify/': typeof VerifyIndexRoute
+  '/_authenticated/events/$eventId': typeof AuthenticatedEventsEventIdRoute
+  '/_authenticated/events/': typeof AuthenticatedEventsIndexRoute
   '/api/public/hooks/dispatch-certificates': typeof ApiPublicHooksDispatchCertificatesRoute
 }
 export interface FileRouteTypes {
@@ -95,8 +125,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/audit'
     | '/dashboard'
+    | '/organizations'
     | '/verify/$code'
     | '/verify/'
+    | '/events/$eventId'
+    | '/events/'
     | '/api/public/hooks/dispatch-certificates'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -104,8 +137,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/audit'
     | '/dashboard'
+    | '/organizations'
     | '/verify/$code'
     | '/verify'
+    | '/events/$eventId'
+    | '/events'
     | '/api/public/hooks/dispatch-certificates'
   id:
     | '__root__'
@@ -114,8 +150,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/_authenticated/audit'
     | '/_authenticated/dashboard'
+    | '/_authenticated/organizations'
     | '/verify/$code'
     | '/verify/'
+    | '/_authenticated/events/$eventId'
+    | '/_authenticated/events/'
     | '/api/public/hooks/dispatch-certificates'
   fileRoutesById: FileRoutesById
 }
@@ -165,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/organizations': {
+      id: '/_authenticated/organizations'
+      path: '/organizations'
+      fullPath: '/organizations'
+      preLoaderRoute: typeof AuthenticatedOrganizationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/verify/': {
       id: '/verify/'
       path: '/verify'
@@ -179,6 +225,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VerifyCodeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/events/': {
+      id: '/_authenticated/events/'
+      path: '/events'
+      fullPath: '/events/'
+      preLoaderRoute: typeof AuthenticatedEventsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/events/$eventId': {
+      id: '/_authenticated/events/$eventId'
+      path: '/events/$eventId'
+      fullPath: '/events/$eventId'
+      preLoaderRoute: typeof AuthenticatedEventsEventIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/hooks/dispatch-certificates': {
       id: '/api/public/hooks/dispatch-certificates'
       path: '/api/public/hooks/dispatch-certificates'
@@ -192,11 +252,17 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAuditRoute: typeof AuthenticatedAuditRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedOrganizationsRoute: typeof AuthenticatedOrganizationsRoute
+  AuthenticatedEventsEventIdRoute: typeof AuthenticatedEventsEventIdRoute
+  AuthenticatedEventsIndexRoute: typeof AuthenticatedEventsIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAuditRoute: AuthenticatedAuditRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedOrganizationsRoute: AuthenticatedOrganizationsRoute,
+  AuthenticatedEventsEventIdRoute: AuthenticatedEventsEventIdRoute,
+  AuthenticatedEventsIndexRoute: AuthenticatedEventsIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

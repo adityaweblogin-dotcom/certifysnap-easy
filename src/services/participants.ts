@@ -30,7 +30,7 @@ export async function addParticipant(
   await recordAudit({
     action: "participant.created",
     entityType: "participant",
-    entityId: rows[0]?.id,
+    ...(rows[0]?.id ? { entityId: rows[0].id } : {}),
     eventId,
     metadata: { email: draft.email },
   });
